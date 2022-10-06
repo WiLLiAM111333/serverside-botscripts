@@ -72,8 +72,10 @@ The SSH Agent process is killed.
 You call `bot.sh <name> log read` when you want to read the logs of a specific bot. Using this command gives you the default behaviour of reading
 from the `combined.log` file using `cat` with the `-n` flag for line numbers. If you wish to read `stderror.log` or `stdout.log` you call:
 
-	- `bot.sh <name> log read stderror`
-	- `bot.sh <name> log read stdout`
+```bash
+bot.sh <name> log read stderror
+bot.sh <name> log read stdout
+```
 
 ---
 
