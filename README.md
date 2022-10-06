@@ -36,6 +36,8 @@ Then create a directory `oldLogs` to prepare the log backup scripts directory.
 
 # Update A Bot
 
+**This command is very verbose for the sake of debugging!**
+
 You would want to call `bot.sh <name> update` to update a bot. This would shut the bot down using PM2 and then start an SSH Agent and add 
 the `~/.ssh/git` key.
 
@@ -65,3 +67,28 @@ The SSH Agent process is killed.
 
 ---
 
+# Read Logs
+
+You call `bot.sh <name> log read` when you want to read the logs of a specific bot. Using this command gives you the default behaviour of reading
+from the `combined.log` file using `cat` with the `-n` flag for line numbers. If you wish to read `stderror.log` or `stdout.log` you call:
+
+	- `bot.sh <name> log read stderror`
+	- `bot.sh <name> log read stdout`
+
+---
+
+# Backup logs
+
+You use `bot.sh <name> log backup` when you want to create a backup of your current log directory. This calls `backupLogs.sh` which takes a suffix as 
+an argument and creates a directory inside the `oldLogs` directory with a name of the current date and time split with a T like: 
+`10:07:2022T00:29:21_<suffix>`. The default suffix coming from the `bot.sh` call is `backup`. You can change this by calling the script like:
+`bot.sh <name> log backup <suffix>`. This would create a custom suffix on the backup directory which could be helpful for organizing your backups.
+
+After this directory has been created all log files are moved into it and new log files are created in the `logs` directory.
+
+---
+
+# Start Bot
+
+To start a bot you simply use `bot.sh <name> start` and it just runs in the production environment out the box as long as all dependencies to run 
+are met

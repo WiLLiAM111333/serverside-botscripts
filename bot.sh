@@ -108,7 +108,7 @@ elif [[ $QUERY == "log" && -d $BOT_PATH ]]; then
     if [[ $DEEPER_QUERY == "" ]]; then
       cat $CAT_OPTIONS "${LOG_PATH}/combined.log";
     else if [ -f "${LOG_PATH}/${DEEPER_QUERY}.log" ]; then
-      cat $CAT_OPTIONS "${LOG_PATH}/${SUB_QUERY}.log"
+      cat $CAT_OPTIONS "${LOG_PATH}/${DEEPER_QUERY}.log"
     else
       echo "${DEEPER_QUERY}.log is not a file in the log directory" && exit 1
     fi
