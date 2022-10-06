@@ -36,7 +36,8 @@ Then create a directory `oldLogs` to prepare the log backup scripts directory.
 
 # Update A Bot
 
-You would want to call `bot.sh <name> update` to update a bot. This would start an SSH Agent and add the `~/.ssh/git` key.
+You would want to call `bot.sh <name> update` to update a bot. This would shut the bot down using PM2 and then start an SSH Agent and add 
+the `~/.ssh/git` key.
 
 The following directories are deleted if present:
 	- dist
