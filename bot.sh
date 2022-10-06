@@ -3,8 +3,6 @@
 # CLI tool designed to help with managing bots in a production environment.
 # This tool can create new bot projects, update an existing bot project as well as reading and backing up logs.
 
-# TODO - Command documentation
-
 BOT=$1
 QUERY=$2
 
