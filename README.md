@@ -4,13 +4,7 @@ This is not meant to be a large project, its meant to be something I can use for
 to add configurations to setup which language and discord library. I'm only documenting it for the sake of "completeness", feature suggestions
 and issues are welcome but they might not get prioritized over my current longterm project.
 
-**THIS WILL NOT WORK IF YOU DO NOT RUN BASH ON YOUR MACHINE!**
-
-It is recommended to use this with TypeScript over JavaScript but its not required.
-
-These scripts are made with very little experience of bash over a weekend, so any bad bash practises found are not cared for, they will probably 
-stay until I have the time (and need) to put effort into this. The scripts can:
-
+The script can do the following:
   - Update a bot
   - Backup logs for a bot with or without a given suffix
   - Read the logs combined file for a given bot
@@ -18,12 +12,80 @@ stay until I have the time (and need) to put effort into this. The scripts can:
   - Start a bot in the standard production environment
   - Create a new bot project with automatic git setup
 
-When using these scripts, you want to be using the `bot.sh` file. I have it bound to an alias in my `.bashrc` file like below. This lets me call it 
+When using these scripts, you want to be using the `bot.sh` file. I have it bound to an alias in my `.bashrc` file like below. This lets me call it
 like any other command.
+
 
 ```bash
 alias bot='~/botScripts/bot.sh'
 ```
+
+This can easily be inserted into the bashrc file like below. But be careful to use `>>` and not `>` as it will override the whole file if you dont.
+
+```bash
+echo "alias bot='~/botScripts/bot.sh' >> ~/.bashrc"
+```
+
+# Requirements
+
+	- Bash installation
+	- An SSH key called "git" in `~/.ssh`
+
+Below you will find a guide to create this ssh key and how you add it to GitHub.
+
+---
+
+# SSH Guide
+
+**You can choose to have any type of ssh key but im going to show the most basic approach possible.**
+
+Enter the following command into your terminal:
+
+```bash
+ssh-keygen
+```
+
+This will give you a prompt like:
+
+```
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/william/.ssh/id_rsa): 
+```
+
+Where you enter a path to your file, which should look like this:
+
+```
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/william/.ssh/id_rsa): /home/<YOUR USERNAME>/.ssh/git
+```
+
+Example:
+
+```
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/william/.ssh/id_rsa): /home/william/.ssh/git
+```
+
+Note that you can not use `~` for your specific user directory in this command. The whole path must be specified from root (`/`)
+
+Press enter, you will then be prompted to enter a passphrase, you can choose to not have one by pressing enter again. You will then be asked to enter
+the same passphrase again, press enter if you did not choose a passphrase to skip again, otherwise repeat it. If everything went as expected you will 
+now have your keys random art displayed in the terminal, pretty cool 😎
+
+Now we need to copy the public key so we enter the following command in our terminal:
+
+```bash
+cat ~/.ssh/git.pub
+```
+
+We copy the contents of the key and go to GitHub. Click your avatar and then `Settings`, `SSH and GPG keys`. You will now see a list of all your
+keys registered to your GitHub account, could also be empty. Click the `New SSH key` button.
+
+There are 3 fields here. Name, Key type and Key. Name the key whatever you want to name it. Then select `Authentication Key` in the Key type field.
+Now paste the contents of your file into the Key field, click `Add SSH key` and you are done. All SSH actions are handled automatically with the script
+so you do no have to worry about it after this step.
+
+---
 
 # Create New Bot
 
