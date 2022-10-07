@@ -42,9 +42,9 @@ You would want to call `bot.sh <name> update` to update a bot. This would shut t
 the `~/.ssh/git` key.
 
 The following directories are deleted if present:
-	- dist
-	- node_modules
-	- package-lock.json
+  - dist
+  - node_modules
+  - package-lock.json
 
 - Deleting dist ensures no old JavaScript gets reused when using the TypeScript compiler.
 - Deleting node_modules and package-lock.json ensures dependencies are updated regularly.
@@ -76,6 +76,12 @@ from the `combined.log` file using `cat` with the `-n` flag for line numbers. If
 bot.sh <name> log read stderror
 bot.sh <name> log read stdout
 ```
+
+---
+
+# Delete Logs
+
+You call `bot.sh <name> log delete` to completely delete the log entry. These logs are not backed up, just replaced with empty log files.
 
 ---
 

@@ -126,6 +126,7 @@ elif [[ $QUERY == "log" && -d $BOT_PATH ]]; then
   # Deletes and replaces the log files
   elif [[ $SUB_QUERY == "delete" ]]; then
     rm -rf $LOG_PATH
+
     mkdir $LOG_PATH && \
       touch "${LOG_PATH}/error.log" && \
       touch "${LOG_PATH}/stdout.log" && \
