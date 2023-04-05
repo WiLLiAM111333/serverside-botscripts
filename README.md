@@ -1,5 +1,7 @@
 # Botscripts
 
+**THIS WILL NOT WORK ON YOUR MACHINE, I HAVE HARD CODED THE USER ON THE GITHUB URLS. THIS IS BEING WORKED ON**
+
 This is not meant to be a large project, its meant to be something I can use for my Discord.JS bots. With that in mind I have not gone out of my way 
 to add configurations to setup which language and discord library. I'm only documenting it for the sake of "completeness", feature suggestions
 and issues are welcome but they might not get prioritized over my current longterm project.
