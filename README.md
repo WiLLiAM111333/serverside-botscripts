@@ -30,62 +30,8 @@ echo "alias bot='~/botScripts/bot.sh' >> ~/.bashrc"
 
 # Requirements
 
-	- Bash installation
-	- An SSH key called "git" in `~/.ssh`
-
-Below you will find a guide to create this ssh key and how you add it to GitHub.
-
----
-
-# SSH Guide
-
-**You can choose to have any type of ssh key but im going to show the most basic approach possible.**
-
-Enter the following command into your terminal:
-
-```bash
-ssh-keygen
-```
-
-This will give you a prompt like:
-
-```
-Generating public/private rsa key pair.
-Enter file in which to save the key (/home/william/.ssh/id_rsa): 
-```
-
-Where you enter a path to your file, which should look like this:
-
-```
-Generating public/private rsa key pair.
-Enter file in which to save the key (/home/william/.ssh/id_rsa): /home/<YOUR USERNAME>/.ssh/git
-```
-
-Example:
-
-```
-Generating public/private rsa key pair.
-Enter file in which to save the key (/home/william/.ssh/id_rsa): /home/william/.ssh/git
-```
-
-Note that you can not use `~` for your specific user directory in this command. The whole path must be specified from root (`/`)
-
-Press enter, you will then be prompted to enter a passphrase, you can choose to not have one by pressing enter again. You will then be asked to enter
-the same passphrase again, press enter if you did not choose a passphrase to skip again, otherwise repeat it. If everything went as expected you will 
-now have your keys random art displayed in the terminal, pretty cool 😎
-
-Now we need to copy the public key so we enter the following command in our terminal:
-
-```bash
-cat ~/.ssh/git.pub
-```
-
-We copy the contents of the key and go to GitHub. Click your avatar and then `Settings`, `SSH and GPG keys`. You will now see a list of all your
-keys registered to your GitHub account, could also be empty. Click the `New SSH key` button.
-
-There are 3 fields here. Name, Key type and Key. Name the key whatever you want to name it. Then select `Authentication Key` in the Key type field.
-Now paste the contents of your file into the Key field, click `Add SSH key` and you are done. All SSH actions are handled automatically with the script
-so you do no have to worry about it after this step.
+SSH is no longer required. I may make this optional in the future when I have a working ssh setup myself. With that said all you need is a bash
+installation and a cached personal access token in place of your password for HTTPS git actions.
 
 ---
 
@@ -102,10 +48,9 @@ Then create a directory `oldLogs` to prepare the log backup scripts directory.
 
 **This command is very verbose for the sake of debugging!**
 
-You would want to call `bot.sh <name> update` to update a bot. This would shut the bot down using PM2 and then start an SSH Agent and add 
-the `~/.ssh/git` key.
+You would want to call `bot.sh <name> update` to update a bot. This would being by shutting the bot down using PM2.
 
-The following directories are deleted if present:
+The following directories are then deleted if present:
   - dist
   - node_modules
   - package-lock.json
@@ -113,7 +58,7 @@ The following directories are deleted if present:
 - Deleting dist ensures no old JavaScript gets reused when using the TypeScript compiler.
 - Deleting node_modules and package-lock.json ensures dependencies are updated regularly.
 
-Secondly, the entire repo is cloned into a directory called `update` and the working directory is changed into it. After that we delete all the old 
+Thirdly, the entire repo is cloned into a directory called `update` and the working directory is changed into it. After that we delete all the old 
 files with new files. This is done by checking if the file exists in both `update` and the root of the bots directory. This makes it so all the files
 coming from the GitHub repo get replaced but anything externally added like a `.env` file or `assets` directory does not get removed as they are not
 on the repo. After deleting the old files we move the new files into the bots root directory.
@@ -126,8 +71,6 @@ application. Afterwards we move the working directory back to the bots root dire
 
 After that it removes any files and directories not needed for the JavaScript application to run, such as `tsconfig.json`, `index.d.ts`, `README.md`
 etc etc. After cleaning up the project it backs up the logs with the suffix `update` and starts it up.
-
-The SSH Agent process is killed.
 
 ---
 
