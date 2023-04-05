@@ -12,17 +12,13 @@ BOT_SCRIPTS_PATH="${HOME}/botScripts"
 if [[ $QUERY == "update" && -d $BOT_PATH ]]; then
   pm2 "stop" $BOT
 
-  # SSH magic
-  eval $(ssh-agent -s)
-  ssh-add "${HOME}/.ssh/git"
-
   pushd $BOT_PATH
 
   rm -rf -v "./node_modules"
   rm -rf -v "./dist"
   rm -rf -v "package-lock.json"
 
-  git clone --depth 1 --branch master "git@github.com:WiLLiAM111333/${BOT}.git" ./update
+  git clone --depth 1 --branch master "https://github.com/WiLLiAM111333/${BOT}.git" ./update
 
   pushd "./update"
 
@@ -85,9 +81,6 @@ if [[ $QUERY == "update" && -d $BOT_PATH ]]; then
   # Shit language
   bash "${BOT_SCRIPTS_PATH}/backupLogs.sh" $BOT "update"
   bash "${BOT_SCRIPTS_PATH}/startBot.sh" $BOT
-
-  # No more SSH magic
-  eval $(ssh-agent -k)
 elif [[ $QUERY == "start" && -d $BOT_PATH ]]; then
   bash "${BOT_SCRIPTS_PATH}/startBot.sh" $BOT
 elif [[ $QUERY == "log" && -d $BOT_PATH ]]; then
@@ -138,7 +131,7 @@ elif [[ $QUERY == "create" && ! -d $BOT_PATH ]]; then
   mkdir $BOT_PATH
   pushd $BOT_PATH
 
-  GIT_URL="git@github.com:WiLLiAM111333/${BOT}.git"
+  GIT_URL="https://github.com/WiLLiAM111333/${BOT}.git"
 
   git init
   git remote add bot $GIT_URL && echo "Added remote 'bot' at '${GIT_URL}'"
