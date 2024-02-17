@@ -2,6 +2,8 @@
 
 **Tool to help me host multiple bots on one unix based machine with ease running bash**
 
+**Currently only supports PM2 processes but support for other runtimes will be added along the way when needed**
+
 You will find instructions for how to use this tool for your own machine (if I ever got around to fixing it so it works on any machine and not just 
 my own, who knows really)
 
