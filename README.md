@@ -1,6 +1,9 @@
 # Botscripts
 
-Tool to help me host multiple bots on one unix based machine with ease running bash
+**Tool to help me host multiple bots on one unix based machine with ease running bash**
+
+You will find instructions for how to use this tool for your own machine (if I ever got around to fixing it so it works on any machine and not just 
+my own, who knows really)
 
 The script can do the following:
   - Update a bot
@@ -27,8 +30,61 @@ echo "alias bot='~/botScripts/bot.sh' >> ~/.bashrc"
 
 # Requirements
 
-SSH is no longer required. I may make this optional in the future when I have a working ssh setup myself. With that said all you need is a bash
-installation and a cached personal access token in place of your password for HTTPS git actions.
+  - Bash installation
+  - An SSH key called "git" in `~/.ssh`
+
+Below you will find a guide to create this ssh key and how you add it to GitHub.
+
+---
+
+# SSH Guide
+
+**You can choose to have any type of ssh key but im going to show the most basic approach possible.**
+
+Enter the following command into your terminal:
+
+```bash
+ssh-keygen
+```
+
+This will give you a prompt like:
+
+```
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/william/.ssh/id_rsa): 
+```
+
+Where you enter a path to your file, which should look like this:
+
+```
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/william/.ssh/id_rsa): /home/<YOUR USERNAME>/.ssh/git
+```
+
+Example:
+
+```
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/william/.ssh/id_rsa): /home/william/.ssh/git
+```
+
+Note that you can not use `~` for your specific user directory in this command. The whole path must be specified from root (`/`)
+
+Press enter, you will then be prompted to enter a passphrase, this is required for github ssh usage. You will then be asked to enter
+the same passphrase again. If everything went as expected you will now have your keys random art displayed in the terminal, pretty cool 😎
+
+Now we need to copy the public key so we enter the following command in our terminal:
+
+```bash
+cat ~/.ssh/git.pub
+```
+
+We copy the contents of the key and go to GitHub. Click your avatar and then `Settings`, `SSH and GPG keys`. You will now see a list of all your
+keys registered to your GitHub account, could also be empty. Click the `New SSH key` button.
+
+There are 3 fields here. Name, Key type and Key. Name the key whatever you want to name it. Then select `Authentication Key` in the Key type field.
+Now paste the contents of your file into the Key field, click `Add SSH key` and you are done. All SSH actions are handled automatically with the script
+so you do no have to worry about it after this step.
 
 ---
 
