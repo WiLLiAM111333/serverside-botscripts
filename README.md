@@ -1,17 +1,14 @@
 # Botscripts
 
-**THIS WILL NOT WORK ON YOUR MACHINE, I HAVE HARD CODED THE USER ON THE GITHUB URLS. THIS IS BEING WORKED ON**
-
-This is not meant to be a large project, its meant to be something I can use for my Discord.JS bots. With that in mind I have not gone out of my way 
-to add configurations to setup which language and discord library. I'm only documenting it for the sake of "completeness", feature suggestions
-and issues are welcome but they might not get prioritized over my current longterm project.
+Tool to help me host multiple bots on one unix based machine with ease running bash
 
 The script can do the following:
   - Update a bot
+  - Navigate to a bot
+  - Start and stop a bot in the standard production environment
   - Backup logs for a bot with or without a given suffix
   - Read the logs combined file for a given bot
   - Delete the current logs without any backup
-  - Start a bot in the standard production environment
   - Create a new bot project with automatic git setup
 
 When using these scripts, you want to be using the `bot.sh` file. I have it bound to an alias in my `.bashrc` file like below. This lets me call it
