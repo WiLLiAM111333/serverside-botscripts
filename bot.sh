@@ -81,9 +81,19 @@ if [[ $QUERY == "update" && -d $BOT_PATH ]]; then
   # Shit language
   bash "${BOT_SCRIPTS_PATH}/backupLogs.sh" $BOT "update"
   bash "${BOT_SCRIPTS_PATH}/startBot.sh" $BOT
+
+# TODO
+# Move this to the bottom and make it dynamic on stop and restart as they are native pm2 commands
 elif [[ $QUERY == "start" && -d $BOT_PATH ]]; then
   bash "${BOT_SCRIPTS_PATH}/startBot.sh" $BOT
-elif [[ $QUERY == "log" && -d $BOT_PATH ]]; then
+elif [[ $QUERY == "stop" && -d $BOT_PATH ]]; then
+  pm2 stop $BOT
+elif [[ $QUERY == "restart" && -d $BOT_PATH ]]; then
+  pm2 restart $BOT
+elif [[ $QUERY == "navigate" && -d $BOT_PATH ]]; then
+  cd $BOT_PATH
+  bash
+elif [[ $QUERY == "logs" && -d $BOT_PATH ]]; then
   LOG_PATH="${BOT_PATH}/logs"
 
   # Displays line numbers

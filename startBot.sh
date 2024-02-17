@@ -1,6 +1,7 @@
 #!/bin/bash
 
 BOT=$1
+PROCESS_MANAGER=$2
 
 if [ -d "${HOME}/bots/${BOT}" ]; then
   pushd "${HOME}/bots/${BOT}"
@@ -13,5 +14,8 @@ if [ -d "${HOME}/bots/${BOT}" ]; then
     --error "./logs/stderror.log" \
     --no-autorestart \
     --time
+
   popd
 fi
+
+
