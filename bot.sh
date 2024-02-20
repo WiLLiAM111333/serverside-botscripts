@@ -3,10 +3,13 @@
 # CLI tool designed to help with managing bots in a production environment.
 # This tool can create new bot projects, update an existing bot project as well as reading and backing up logs.
 
+# Sources the config file... Would be great to move from such a simple solution and offer better configuration in the future
+source ./.cfg
+
 BOT=$1
 QUERY=$2
 
-BOT_PATH="${HOME}/bots/${BOT}"
+BOT_PATH="${BOT_ROOT}/${BOT}"
 BOT_SCRIPTS_PATH="${HOME}/botScripts"
 
 if [[ $QUERY == "update" && -d $BOT_PATH ]]; then

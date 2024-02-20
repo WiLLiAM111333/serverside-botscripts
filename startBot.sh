@@ -1,10 +1,12 @@
 #!/bin/bash
 
-BOT=$1
-PROCESS_MANAGER=$2
+source ./.cfg
 
-if [ -d "${HOME}/bots/${BOT}" ]; then
-  pushd "${HOME}/bots/${BOT}"
+BOT=$1
+BOT_PATH="${BOT_ROOT}/${BOT}"
+
+if [ -d $BOT_PATH ]; then
+  pushd $BOT_PATH
 
   pm2 start ./index.js \
     --name $BOT \
@@ -17,5 +19,3 @@ if [ -d "${HOME}/bots/${BOT}" ]; then
 
   popd
 fi
-
-

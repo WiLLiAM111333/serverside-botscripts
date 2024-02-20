@@ -1,12 +1,16 @@
 #!/bin/bash
 
+source ./.cfg
+
 BOT=$1
 SUFFIX=$2
+
+BOT_PATH="${BOT_ROOT}/${BOT}"
 
 # yep
 backupDir=$(date +'%m:%d:%YT%H:%M:%S')
 
-pushd "${HOME}/bots/${BOT}"
+pushd $BOT_PATH
 
 [ ! -d "./oldLogs" ] && mkdir "./oldLogs"
 [ ! -d "./oldLogs/${backupDir}_${SUFFIX}" ] && mkdir "./oldLogs/${backupDir}_${SUFFIX}"
