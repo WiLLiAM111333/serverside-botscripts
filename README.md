@@ -135,24 +135,24 @@ You call `bot.sh <name> log read` when you want to read the logs of a specific b
 from the `combined.log` file using `cat` with the `-n` flag for line numbers. If you wish to read `stderror.log` or `stdout.log` you call:
 
 ```bash
-bot.sh <name> log read stderror
-bot.sh <name> log read stdout
+bot.sh <name> logs read stderror
+bot.sh <name> logs read stdout
 ```
 
 ---
 
 # Delete Logs
 
-You call `bot.sh <name> log delete` to completely delete the log entry. These logs are not backed up, just replaced with empty log files.
+You call `bot.sh <name> logs delete` to completely delete the log entry. These logs are not backed up, just replaced with empty log files.
 
 ---
 
 # Backup logs
 
-You use `bot.sh <name> log backup` when you want to create a backup of your current log directory. This calls `backupLogs.sh` which takes a suffix as 
+You use `bot.sh <name> logs backup` when you want to create a backup of your current log directory. This calls `backupLogs.sh` which takes a suffix as 
 an argument and creates a directory inside the `oldLogs` directory with a name of the current date and time split with a T like: 
 `10:07:2022T00:29:21_<suffix>`. The default suffix coming from the `bot.sh` call is `backup`. You can change this by calling the script like:
-`bot.sh <name> log backup <suffix>`. This would create a custom suffix on the backup directory which could be helpful for organizing your backups.
+`bot.sh <name> logs backup <suffix>`. This would create a custom suffix on the backup directory which could be helpful for organizing your backups.
 
 After this directory has been created all log files are moved into it and new log files are created in the `logs` directory.
 
