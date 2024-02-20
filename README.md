@@ -1,5 +1,11 @@
 # Botscripts
 
+# TODO
+
+Finish updating everything with the new config setup
+
+---
+
 **Tool to help me host multiple bots on one unix based machine with ease running bash**
 
 **Currently only supports PM2 processes but support for other runtimes will be added along the way when needed**
