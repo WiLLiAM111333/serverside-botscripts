@@ -3,25 +3,34 @@
 # CLI tool designed to help with managing bots in a production environment.
 # This tool can create new bot projects, update an existing bot project as well as reading and backing up logs.
 
-# Sources the config file... Would be great to move from such a simple solution and offer better configuration in the future
-source ./.cfg
+. "${HOME}/botScripts/sourceCFG.sh"
 
 BOT=$1
 QUERY=$2
 
 BOT_PATH="${BOT_ROOT}/${BOT}"
-BOT_SCRIPTS_PATH="${HOME}/botScripts"
+
+echo $BOT_PATH
 
 if [[ $QUERY == "update" && -d $BOT_PATH ]]; then
+  eval $(ssh-agent -s)
+  eval $(ssh-add "${HOME}/.ssh/${GITHUB_SSH_FILENAME}")
+
+  echo $GITHUB_SSH_FILENAME
+  echo $GITHUB_USERNAME
+  echo $BOT_ROOT
+  echo $BOTSCRIPTS_ROOT
+
   pm2 "stop" $BOT
 
   pushd $BOT_PATH
 
-  rm -rf -v "./node_modules"
+  rm -rf "./node_modules"
+  echo "Deleted node_modules"
   rm -rf -v "./dist"
   rm -rf -v "package-lock.json"
 
-  git clone --depth 1 --branch master "https://github.com/WiLLiAM111333/${BOT}.git" ./update
+  git clone --depth 1 --branch master "git@github.com:${GITHUB_USERNAME}/${BOT}.git" ./update
 
   pushd "./update"
 
@@ -81,14 +90,16 @@ if [[ $QUERY == "update" && -d $BOT_PATH ]]; then
 
   popd
 
+  ssh-agent -k
+
   # Shit language
-  bash "${BOT_SCRIPTS_PATH}/backupLogs.sh" $BOT "update"
-  bash "${BOT_SCRIPTS_PATH}/startBot.sh" $BOT
+  bash "${BOTSCRIPTS_ROOT}/backupLogs.sh" $BOT "update"
+  bash "${BOTSCRIPTS_ROOT}/startBot.sh" $BOT
 
 # TODO
 # Move this to the bottom and make it dynamic on stop and restart as they are native pm2 commands
 elif [[ $QUERY == "start" && -d $BOT_PATH ]]; then
-  bash "${BOT_SCRIPTS_PATH}/startBot.sh" $BOT
+  bash "${BOTSCRIPTS_ROOT}/startBot.sh" $BOT
 elif [[ $QUERY == "stop" && -d $BOT_PATH ]]; then
   pm2 stop $BOT
 elif [[ $QUERY == "restart" && -d $BOT_PATH ]]; then
@@ -113,15 +124,14 @@ elif [[ $QUERY == "logs" && -d $BOT_PATH ]]; then
     # Else read only if $4 is the name of a file in the logs directory (stdout, error or combined)
     if [[ $DEEPER_QUERY == "" ]]; then
       cat $CAT_OPTIONS "${LOG_PATH}/combined.log";
-    else if [ -f "${LOG_PATH}/${DEEPER_QUERY}.log" ]; then
+    elif [ -f "${LOG_PATH}/${DEEPER_QUERY}.log" ]; then
       cat $CAT_OPTIONS "${LOG_PATH}/${DEEPER_QUERY}.log"
     else
       echo "${DEEPER_QUERY}.log is not a file in the log directory" && exit 1
     fi
-	fi
 
   # Illegal activities happen in this place
-	elif [[ $SUB_QUERY == "backup" ]]; then
+  elif [[ $SUB_QUERY == "backup" ]]; then
     # Default the suffix to "backup" if there is no $4
     if [[ $DEEPER_QUERY == "" ]]; then
       bash "${BOT_SCRIPTS_PATH}/backupLogs.sh" $BOT "backup"
@@ -134,25 +144,25 @@ elif [[ $QUERY == "logs" && -d $BOT_PATH ]]; then
     rm -rf $LOG_PATH
 
     mkdir $LOG_PATH && \
-      touch "${LOG_PATH}/error.log" && \
-      touch "${LOG_PATH}/stdout.log" && \
-      touch "${LOG_PATH}/combined.log"
+    touch "${LOG_PATH}/error.log" && \
+    touch "${LOG_PATH}/stdout.log" && \
+    touch "${LOG_PATH}/combined.log"
   fi
 
-  # Creates a new bot folder in /home/william/bots with a git URL as $3
-elif [[ $QUERY == "create" && ! -d $BOT_PATH ]]; then
+# Creates a new bot folder in /home/william/bots with a git URL as $3
+elif [[ $QUERY == "create" && -d $BOT_PATH ]]; then
   mkdir $BOT_PATH
   pushd $BOT_PATH
 
-  GIT_URL="https://github.com/WiLLiAM111333/${BOT}.git"
+  GIT_URL="https://www.github.com/${GITHUB_USERNAME}/${BOT}.git"
 
   git init
   git remote add bot $GIT_URL && echo "Added remote 'bot' at '${GIT_URL}'"
 
   mkdir "./logs" && \
-    touch "./logs/error.log" && \
-    touch "./logs/stdout.log" && \
-    touch "./logs/combined.log"
+  touch "./logs/error.log" && \
+  touch "./logs/stdout.log" && \
+  touch "./logs/combined.log" && \
   mkdir oldLogs
 
   popd

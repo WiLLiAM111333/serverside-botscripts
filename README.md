@@ -87,7 +87,7 @@ Now we need to copy the public key so we enter the following command in our term
 cat ~/.ssh/git.pub
 ```
 
-We copy the contents of the key and go to GitHub. Click your avatar and then `Settings`, `SSH and GPG keys`. You will now see a list of all your
+You then copy the contents of the key and go to GitHub. Click your avatar and then `Settings`, `SSH and GPG keys`. You will now see a list of all your
 keys registered to your GitHub account, could also be empty. Click the `New SSH key` button.
 
 There are 3 fields here. Name, Key type and Key. Name the key whatever you want to name it. Then select `Authentication Key` in the Key type field.

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./.cfg
+. "${HOME}/botScripts/sourceCFG.sh"
 
 BOT=$1
 BOT_PATH="${BOT_ROOT}/${BOT}"
